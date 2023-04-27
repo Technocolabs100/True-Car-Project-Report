@@ -1,103 +1,102 @@
+# Used Car Price Prediction
+The quest to build an automobile started in 1672 with the invention of the first steam-powered vehicle. However, the first practical modern automobile was developed by Carl Benz in 1886, and later the Ford T model became the first mass-produced automobile in 1908. It was around this time that the car reselling industry also started emerging. Until recently, the reselling business operated only through offline channels. However, now with advancements in Computer Science and Information Technology the business moved online and customers could check the price of their old vehicles with the help of artificial intelligence online.
 
-# Car Prediction
+We are a team of 6 members working as data analyst interns at Technocolabs softwares. We have built a machine learning model to predict the prices of used vehicles for Truecar.Inc an US based automotive resale and pricing website.
 
-A car price prediction model is a stastical model that predicts the price of a car based on its features.The Features can include the car's make,model,year,mileage,condition,state,city.They can also be used by consumers to get an idea of how much a car is worth.
+Python was used for EDA, feature engineering, and model building, and Flask and AWS were used for deployment.
 
-## Understanding the Dataset
->The Dataset we are working on is a combination of **car_listing** for sales and car that are **sold** to the consumers.
-
-->car_listing dataset contain the names of the cars and model no,make,vin number,mileage ,year bought that are ready for resale.It contain a row of (1216250, 9).
-
-->car dataset cnatain the car list that are sold to the user by the car manufacturer.It contain a row of (852122, 8).
-
-->The target values for our model prediction is yo predict the **price** f the car.
-
-#**EDA**
-**Introduction:**
--**merged_data*** data comprises of 545623 rows and 8 columns.
--Dataset comprises of :-
-->price - numerical values dtype=int
-->make - categorical value dtype = obejct
-->model - categorical value dtype = obejct
-->VIN number - categorical value dtype = obejct
-->year - numerical values dtype=obejct
-->state -categorical value dtype = obejct
-->city -categorical value dtype = obejct
-->mileage - numerical values dtype=float
-
-**Univariate Analysis:**
-
-Plotted hostogram to see the disribution of data most of the curve are left screwed 
--Total no of cities 2553
- CITITES LIKE :
-> Houston   :              8810
-> San Antonio:             5115
-> Louisville  :            4392
-> Jacksonville :           4004    
-> Orlando       :          3743               
-
->ARE THE LARGEST  HUB FOR CAR DEALING
-
--total numbe of car's maker: 58
--total numebr of car's model : 2579
--total numebr of state : 59
-
-**Correlation Plot of Numerical Variables:**
-All the contnuous variables are positively correlated with each other with Correlation coeffecient of 0.42 expect price and mleage having a correlation of -0.77 and mileage and year having a correlation of -0.44.
-
-## Model Building
-
-#### Metrics considered for Model Evaluation
+## The Dataset
+1. Price - The Price of the car.	
+2. Year	- The year in which the car was registered. The data ranges from 1997 - 2018 i.e 22 years.
+3. Milage - Total miles the car has been driven.	
+4. City - The city in which car is registered. Total number of such cities are 2446
+5. State - The state in which car is registered. Total number of such states are 51.
+6. Vin - A unique number which identifies the vehicle. 	
+7. Make - The company which manufactured the car. Total number of such comanies are 58.
+8. Model - Model name of the car. Total number of such models are 3107.
 
 
-->**RMSE**: Root Mean Squared Error is a measurement of the difference between predicted and actual values. It is calculated by taking the square root of the average of the squared differences between the predicted and actual values.
-->**R2 Score**: R-Squared (or R2) is a statistical measure that represents the proportion of the variance for a dependent variable that's explained by an independent variable or variables in a regression model. It is calculated by dividing the explained variance by the total variance.
-->**MAE**: Mean Absolute Error is a measurement of the difference between predicted and actual values. It is calculated by taking the average of the absolute differences between the predicted and actual values.
-->**MSE**: Mean Squared Error is a measurement of the difference between predicted and actual values. It is calculated by taking the average of the squared differences between the predicted and actual values.
+## Process Flow
 
-#### Logistic Regression
-- Logistic Regression helps find how probabilities are changed with actions.
-- The function is defined as P(y) = 1 / 1+e^-(A+Bx) 
-- Logistic regression involves finding the **best fit S-curve** where A is the intercept and B is the regression coefficient. The output of logistic regression is a probability score.
+![flowchart12](https://user-images.githubusercontent.com/112056538/222874372-8fdc6a63-32a7-4f0a-8a95-5d2d2944c8d0.png)
 
-#### Random Forest Regression
--Random Forest Regression is a machine learning algorithm used for regression tasks. It is an ensemble of multiple decision trees, with each tree trained on a random subset of features and samples using bagging and feature randomness techniques. The algorithm aims to create a diverse set of trees that make uncorrelated predictions, and then combine their outputs to achieve better prediction accuracy than any single decision tree. Bagging and feature randomness help to reduce overfitting, increase robustness and make the model less sensitive to noisy data.
-- **Bagging and Boosting**: In this method of merging the same type of predictions. Boosting is a method of merging different types of predictions. Bagging decreases variance, not bias, and solves over-fitting issues in a model. Boosting decreases bias, not variance.
-- **Feature Randomness**:  In a normal decision tree, when it is time to split a node, we consider every possible feature and pick the one that produces the most separation between the observations in the left node vs. those in the right node. In contrast, each tree in a random forest can pick only from a random subset of features. This forces even more variation amongst the trees in the model and ultimately results in lower correlation across trees and more diversification
 
-### Choosing the features
-We know from the EDA that all the features are highly correlated and almost follows the same trend.
+### 1. Importing Libraries and Data
+The first step was to import the required libraries for Data importing, data manipulation, mathematical calculations, visualisation and to import functions related to algorithm. The libraries - Pandas, Numpy, Scipy, Matplotlib, seaborn and sklearn.
 
-when we perform linear regression to predict the price of the car we are getting a score of
-Model Linear Regression	R2-0.299133	MAE-4131.940412	MSE-8.820599e-01 
+### 2. Exploratory Data Analysis (EDA)
+The dataset was explored and some analysis was done performed on it to reveal insights which are difficuilt to find in the raw data. So in EDA the first step was to check for *Shape* of the data then checking for *Null values* and *Duplicate values*. With the use of *df.describe* function the count, mean, standard deviation and the Inter quartile range was found. Then *Univariate analysis* was performed with help of visualisations to check for Skewness, Kurtosis and outliers also the Count of diffrent features were obtained. Similarly *Bivariate analysis* was performed to find the relation between two or more than two features.
 
--Random forest regression score of 
-Random Forest	R2 - 0.299115	MAE-2420.135677	MSE-2.228450e+07
+### 3. Feature Engineering
+Encoding of the data was done using *One hot encoding* and *Target encoding* as the number of labels were very high under some features and encoding it directly would have given memory error so for encoding purpose the top 10 labels under each feature were considered. As the values in the data had a high range so it was necessary to scale down the numbers in the data in range of 0-1 which simplifies the calculation for the model we were going to build. So, we used the *MinMaxScaler* function from the Sklearn library to transform the data. 
 
-Ridge Regression R2-0.129785	MAE-2420.135677	MSE-1.606177e+08
+### 4. Feature Selection
+#### 4.1 Principle Component Analysis 
+The orignal dataset was encoded and hence had 39 columns representing different encoded features were present. So, here we applied 'Principal Component Analysis' to create clustures of data points which were closely related to each other and after applying PCA the number of features reduced from 39 to 8 and also total variance explained by the principle components was calculated. This can be a useful metric for evaluating the effectiveness of the dimensionality reduction process in retaining the original information in the dataset.
 
-#Model Building
--First split the dataset into two set training set and test set with a split ratio of **80%-20%**.
--**x_train,x_test,y_train,y_test**
+![PCA Explained varience score](https://user-images.githubusercontent.com/112056538/222874452-07ec1ee4-a0e6-43fe-9bbb-3d6218ca8e10.png)
 
--Removing the columns that are not required for model prediction
+#### 4.2 Multicolinearity
+Then The 'Multicolinearity' between the independent variables was checked the *variance inflation factor* (VIF) is calculated for each feature in the 'x_train' dataset using the 'variance_inflation_factor()' function from the 'statsmodels' library. The VIF is a measure of the degree of multicollinearity between a feature and the other features in the dataset. A high VIF value indicates that the feature is highly correlated with other features, which can cause problems in some regression models. Finally, a pandas DataFrame is created with the VIF values and the column names are set to the feature names of the original dataframe (df). A heatmap was created using the seaborn library to visualise the results of Multicolinearity test.
+#### 4.3 Normality of Residual
+A simple linear regression model is trained and the resulting predictions are stored in the 'y_pred' variable. The residual values (i.e., the differences between the actual and predicted target variable values) are calculated and a 'kernel density estimate (KDE) plot' of the residual values is generated using seaborn library. Additionally, a 'probability plot' (i.e., Q-Q plot) of the residual values is generated. The probplot() function plots the residuals against a theoretical distribution (in this case, the normal distribution) and visually indicates whether the residuals are normally distributed or not. These plots can be used to assess the distribution of the residuals and whether the assumptions of the linear regression model are being met.
+#### 4.4 Homoscadasticity
+Homoscedasticity, also known as homogeneity of variance, is a statistical property that describes the condition in which the variance of the residuals is constant across the range of predicted values. It is an important assumption of linear regression modeling that should be assessed and satisfied for the model to be valid and reliable.A scatter plot is created where the x-axis represents the predicted values, while the y-axis represents the residuals. The scatter plot can be used to assess whether the linear regression model is making systematic errors (i.e., under- or over-predicting the target variable for a particular range of values), or whether the errors are random and evenly distributed across the range of predicted values. The scatter plot shows a distinct pattern which indicates that linear regression model is not capturing some important features of the data and needs to be improved.
+#### 4.5 Autocorelation of Errors
+The residuals from the linear regression model trained earlier is plotted using the line plot. The line plot can be useful for visualizing the distribution of the residuals and identifying any patterns or trends in the data that may indicate violations of the assumptions of linear regression modeling. A pattern is observed in the residuals plot which suggests that there is autocorrelation in the error terms. Autocorrelation occurs when the error terms at one point in time are correlated with the error terms at another point in time, either positively or negatively.
 
--creating two new columns for our car model prediction **Years_Ago** and **Avg_Mileage_Per_Year**
+### 5. Model Building
+##### 5.1 Linear Regression with r2_score as 41 %.
+##### 5.2 Ridge Regression with r2_score as 42 %.
+##### 5.3 Lasso Regression with r2_score as 39 %.
+##### 5.4 Random Forest
+Random forest is an ensemble learning method that combines multiple decision trees to create a more accurate and robust classifier. Each tree in the forest is constructed using a random subset of the training data and a random subset of the features. During the training process, each tree is trained to predict the class label of the training instances using a randomly selected subset of the features. The final class prediction of the random forest classifier is based on the majority vote of the individual trees. 
+###### 5.4.1 Base Model
+The model uses 40 decision trees (n_estimator = 40) and applies the 'score()' method to computes the accuracy of the random forest classifier on the test data.
+###### 5.4.1 Cross Validation
++ Using KFold method split the dataset into 3 equal sized folds. 
++ Then the *'kf'* object created in the previous code block is used to split a list of numbers [1, 2, 3, 4, 5, 6, 7, 8, 9] into 3 different train and test sets. The output will show the indices of each training and testing set for the 3 different splits of the data. 
++ Next we defined a function called *'get_score'* that takes in a machine learning model, training data and testing data. Then using model.score() method we got the accuracy score of the model on the testing data. 
++ As we are dealing with an imbalanced dataset where one class has significantly more samples than the other so we use 'StratifiedKFold' as it preserves the proportion of samples from each class in each fold. An empty list 'scores_rf' is created. This list will be used to store the scores of a machine learning model on different train-test splits of a dataset, using cross-validation. 
++ Then load the 'load_digits()' dataset from the sklearn.datasets module, which contains images of digits 0-9. At the end of the loop, scores_rf will contain the accuracy scores of the random forest model on the 3 different train-test splits of the digits dataset. 
++ cross_val_score() is used to calculate the scores for a RandomForestClassifier model with 40 decision trees on the entire digits dataset. The cv=3 parameter specifies that the dataset should be split into 3 equal-sized folds for cross-validation. The 'Cross_val_score()' is used to calculate the scores for a RandomForestClassifier model with 40 decision trees on the entire digits dataset. The cv=3 parameter specifies that the dataset should be split into 3 equal-sized folds for cross-validation. The function returns an array of 3 scores, which are the accuracy scores of the model on each of the 3 folds of the digits dataset. 
++ The next step calculates the average accuracy score of a RandomForestClassifier model on the digits dataset using 10-fold cross-validation. The np.average() function from the numpy module is then used to calculate the average of these 10 scores which is 94.155 %.
 
--Using **frequency OneHotEncoding** on the categorical columns and getting the numerical values for the model prediction
+![RF accuracy](https://user-images.githubusercontent.com/112056538/222873767-8dfab99d-9912-467a-bb46-37f8f8db6396.png)
 
--Using **MinMaxScaler** on the dataset to convert all the larger values and bringing them to a scale range which increases the performance of the model.
 
-### PCA transformation
-We reduced the 10 features to be only 3.
-~~~
-from sklearn.decomposition import PCA
+## Deployment
 
-pca = PCA(n_components=3)
-pca.fit(X_train2)
-trained = pca.transform(X_train2)
-transformed = pca.transform(X_valid2)
-~~~.
+### 1. Pipeline Building
 
-#Model Fit 
--we pass the train set to our model for prediction and predicted the price of our car.
+A pipeline in machine learning refers to the process of chaining together different preprocessing steps and machine learning models into a single unit, which can be used to automate the entire process of data preparation, training, and prediction. This makes it easier to deploy machine learning models in production.
+
++ Imported the necessary modules and classes
++ Created a list of tuples where each tuple represents a step in the pipeline (The steps - EDA, FE, Model building)
++ Created an instance of the *'Pipeline'* class, passing the list of tuples created in the previous step.
++ Fitting the pipeline to the training data.
++ Used the fitted pipeline to make predictions on new data.
+Using a pipeline to deploy machine learning models has several benefits, including increased efficiency, improved reproducibility, and easier maintenance.
+
+### Deployment using AWS EC2 instance and Flask application
+
++ Logged in to the AWS Management Console and create an EC2 instance.
++ Chose an appropriate instance type and configuration.
++ Allocated an Elastic IP address to the instance.
++ Installed the necessary dependencies on the EC2 instance.
++ Copied the machine learning model file to the EC2 instance.
++ Created a Flask application to serve the machine learning model.
++ Run the Flask application on the EC2 instance.
+
+
+![deployed model 01](https://user-images.githubusercontent.com/112056538/222890318-23d4fed9-4653-4e8e-a559-08ec4d8a1cb9.png)
+
+
+![deployed model 2](https://user-images.githubusercontent.com/112056538/222890324-1e8bf7b1-1aa6-4879-936b-c30aa0ca6cc0.png)
+
+
+## Acknowledgement
+
+I would like to express my sincere gratitude to everyone who supported us throughout this project, "Used Car Price Prediction". First and foremost, we are deeply thankful to our project supervisor Mr. Yasin Shah with the guidance, support, and resources necessary for the successful completion of this project. Their expertise and knowledge were invaluable, and their constructive feedback and suggestions helped us to improve the quality of our work. Finally, we would like to acknowledge the open-source community for providing us with access to the tools and libraries that we used in this project. Without their contributions, this project would not have been possible.
+
+Thank you all for your support and encouragement.
