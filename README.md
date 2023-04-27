@@ -101,24 +101,3 @@ transformed = pca.transform(X_valid2)
 
 #Model Fit 
 -we pass the train set to our model for prediction and predicted the price of our car.
-
-
-## Screenshots
-
-![App Screenshot](https://github.com/Ankitb700/Car-Prediction/blob/main/screensort/Screenshot%20(111).png?raw=true/468x300?text=App+Screenshot+Here)
-
-![App Screenshot](https://github.com/Ankitb700/Car-Prediction/blob/main/screensort/Screenshot%20(110).png?/468x300?text=App+Screenshot+Here)
-
-#** Deployment**
-# **Streamlit**
-- It is a tool that lets you creating applications for your machine learning model by using simple python code.
-- We write a python code for our app using Streamlit; the app asks the user to enter the following data (**news data**, **Open**, **Close**).
-- The output of our app will be 0 or 1 ; 0 indicates that stock price will decrease while 1 means increasing of stock price.
-- The app runs on local host.
-- To deploy it on the internt we have to deploy it to Heroku.
-To deploy this project run
-
-```
-  streamlit run preprocess.py
-```
-
